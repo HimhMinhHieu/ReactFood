@@ -13,6 +13,7 @@ import FoodStore from "./components/FoodStore";
 import StoreDetails from "./components/StoreDetails";
 import ManageStore from "./components/ManageStore";
 import AddFood from "./components/AddFood";
+import UpdateFood from "./components/UpdateFood";
 
 export const MyUserContext = createContext();
 
@@ -31,7 +32,8 @@ const App = () => {
           <Route path="/stores/:storeId" element={<FoodStore />} />
           <Route path="/stores/details" element={<StoreDetails />} />
           <Route path="/stores/manager/:storeId" element={<ManageStore />} />
-          <Route path="/stores/:storeId/addfood" element={<AddFood />} />
+          <Route path="/stores/manager/addfood" element={<AddFood />} />
+          <Route path="/stores/foods/updatefood/:foodId" element={<UpdateFood />} />
         </Routes>
         <Footer />
       </BrowserRouter>

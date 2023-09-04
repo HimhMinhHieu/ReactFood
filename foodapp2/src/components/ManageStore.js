@@ -38,7 +38,7 @@ const ManageStore = () => {
         return <MySpinner />;
 
 
-    let url = `/stores/${storedetails.id}/addfood`;
+    
     return <>
         <Row>
             <h1 className="text-center text-info mt-2">Quản Lý Cửa Hàng</h1>
@@ -50,7 +50,7 @@ const ManageStore = () => {
         >
             
             <Tab eventKey="Food" title="Thức Ăn">
-                <Link to={url} className="btn btn-info" style={{marginLeft: '1rem'}} >Thêm thức ăn</Link>
+                <Link to="/stores/manager/addfood" className="btn btn-info" style={{marginLeft: '1rem'}} >Thêm thức ăn</Link>
                  <Col className="mt-1" >
                             <Table striped hover className="mt-3">
                                 <thead>
@@ -64,6 +64,7 @@ const ManageStore = () => {
                                 </thead>
                                 <tbody>
                                 {store.map(f => {
+                                    let urlfood = `/stores/foods/updatefood/${f.id}`
                                     return <>
                                     <tr >
                                         <td style={{ width: '15rem'}}>
@@ -74,7 +75,7 @@ const ManageStore = () => {
                                         <td>{f.soLuong}</td>
                                         <td>{f.price}</td>
                                         <td>
-                                            <Link to="/" className="btn btn-primary">Cập nhật</Link>
+                                            <Link to={urlfood} className="btn btn-primary">Cập nhật</Link>
                                         </td>
                                         <td>
                                             <Link to="/" className="btn btn-danger">Xóa</Link>

@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Apis, { authApi, endpoints } from "../configs/Apis";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import MySpinner from "../layout/MySpinner";
 
 const AddFood = () => {
-
-    const { sID } = useParams();
     const [food, setFood] = useState({
         "name": "",
         "soLuong": "",
@@ -14,23 +12,42 @@ const AddFood = () => {
         "idLoai": "",
         "idCuaHang": ""
     });
-
+    const [storedetails, setStoreDetails] = useState(null);
+    const [categories, setCategories] = useState(null);
     const [err, setErr] = useState(null);
     const [loading, setLoading] = useState(false);
-    const image = useRef();
+    const file = useRef();
     const nav = useNavigate();
+
+    useEffect(() => {
+        const loadStoreDetails = async () => {
+            let res = await authApi().get(endpoints['store_details']);
+            setStoreDetails(res.data);
+        }
+
+        const loadCates = async () => {
+            let res = await Apis.get(endpoints['categories'])
+            // let res = await fetch("http://localhost:8080/foodapp/api/categories/");
+            // let data = await res.json();
+            setCategories(res.data);
+        }
+        loadStoreDetails();
+        loadCates();
+    }, []);
+
+    
     const addfood = (evt) => {
         evt.preventDefault();
 
         const process = async () => {
             let form = new FormData();
-
+            
             for (let field in food)
                 form.append(field, food[field]);
-            form.append("image", image.current.files[0]);
+            form.append("file", file.current.files[0]);
 
             setLoading(true)
-            let res = await Apis.post(endpoints['add_foods'](sID), form);
+            let res = await Apis.post(endpoints['add_foods'], form);
             if (res.status === 201) {
                 nav("/");
             } else
@@ -39,35 +56,6 @@ const AddFood = () => {
         }
         process();
     }
-
-   
-    const [categories, setCategories] = useState(null);
-
-    useEffect(() => {
-        const loadCates = async () => {
-            let res = await Apis.get(endpoints['categories'])
-            // let res = await fetch("http://localhost:8080/foodapp/api/categories/");
-            // let data = await res.json();
-            setCategories(res.data);
-        }
-
-        loadCates();
-    }, []);
-
-
-    const [storedetails, setStoreDetails] = useState(null);
-
-
-    const loadStoreDetails = async () => {
-        let res = await authApi().get(endpoints['store_details']);
-        setStoreDetails(res.data);
-    }
-
-
-    useEffect(() => {
-        loadStoreDetails();
-    }, [])
-
 
     if(storedetails === null)
         return <MySpinner />;
@@ -101,21 +89,23 @@ const AddFood = () => {
             <Form.Group className="mb-3">
                 <Form.Label>Loại Cửa Hàng</Form.Label>
                 <Form.Select aria-label="Default select example" onChange={(e) => change(e, "idLoai")} >
+                    <option>Chọn</option>
                     {categories.map(c => {
                         return <option value={c.id}>{c.name}</option>
                     })}
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Label>Tên cửa hàng</Form.Label>
+                <Form.Label>Tên Cửa Hàng</Form.Label>
                  
-                 <Form.Select aria-label="Default select example" onChange={(e) => change(e, "idCuaHang")} disabled>
+                 <Form.Select aria-label="Default select example" onChange={(e) => change(e, "idCuaHang")}>
+                    <option>Tên Cửa Hàng</option>
                     <option value={storedetails.id}>{storedetails.name}</option>
                 </Form.Select> 
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Ảnh đại diện</Form.Label>
-                <Form.Control type="file" ref={image} />
+                <Form.Control type="file" ref={file} />
             </Form.Group>
             <Form.Group className="mb-3">
                 <Row>
