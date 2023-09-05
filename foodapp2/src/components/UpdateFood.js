@@ -38,7 +38,6 @@ const UpdateFood = () => {
         loadCates();
     }, []);
 
-    
 
     const updatefood = (evt) => {
         evt.preventDefault();

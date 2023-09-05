@@ -6,7 +6,9 @@ import { Col, Image, Row, Tab, Table, Tabs } from "react-bootstrap";
 
 const ManageStore = () => {
     const {storeId} = useParams();
+    
     const [store, setStore] = useState(null);
+    
 
     useEffect(() => {
         const loadStore = async () => {
@@ -24,8 +26,6 @@ const ManageStore = () => {
         let res = await authApi().get(endpoints['store_details']);
         setStoreDetails(res.data);
     }
-
-
     useEffect(() => {
         loadStoreDetails();
     }, [])
@@ -78,7 +78,7 @@ const ManageStore = () => {
                                             <Link to={urlfood} className="btn btn-primary">Cập nhật</Link>
                                         </td>
                                         <td>
-                                            <Link to="/" className="btn btn-danger">Xóa</Link>
+                                            <Link to="/"  className="btn btn-danger">Xóa</Link>
                                         </td>
                                     </tr>
                                     </>

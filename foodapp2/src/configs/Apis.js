@@ -12,6 +12,7 @@ export const endpoints = {
     "add_foods": `${SERVER_CONTEXT}/api/stores/foods/addfood/`,
     "foods_details": (foodId) => `${SERVER_CONTEXT}/api/foods/${foodId}/`,
     "update_foods": (foodId) => `${SERVER_CONTEXT}/api/stores/foods/updatefood/${foodId}/`,
+    "delete_food": (foodId) => `${SERVER_CONTEXT}/api/stores/foods/${foodId}/`,
     "store_details":`${SERVER_CONTEXT}/api/current-user/stores/details/`,
     "store_foods": (storeId) => `${SERVER_CONTEXT}/api/stores/${storeId}/`,
     "current-user": `${SERVER_CONTEXT}/api/current-user/`,

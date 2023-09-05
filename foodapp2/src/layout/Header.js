@@ -33,7 +33,7 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Link to="/" className="nav-link">Trang chủ</Link>
-
+                            <Link to="/goongmap/shop" className="nav-link">Food-App Maps</Link>
                             {/* <NavDropdown title="Danh mục sản phẩm" id="basic-nav-dropdown">
                         {categories.map(c => {
                             let h = `/?cateId=${c.id}`;
@@ -81,7 +81,7 @@ const Header = () => {
                                     </NavDropdown>
 
                                 </Nav>
-
+                                
                                 {/* <Link  className="nav-link text-danger" to="/">Chào {user.taiKhoan} ! <Image src={user.avatar} roundedCircle thumbnail fluid style={{ width: '2.15rem' }} /></Link>
                         <Button variant="secondary" onClick={logout}>Đăng xuất</Button> */}
                             </>}
