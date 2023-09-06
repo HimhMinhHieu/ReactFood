@@ -18,6 +18,8 @@ export const endpoints = {
     "current-user": `${SERVER_CONTEXT}/api/current-user/`,
     "register": `${SERVER_CONTEXT}/api/users/`,
     "login": `${SERVER_CONTEXT}/api/login/`,
+    "comments": (storeId) => `${SERVER_CONTEXT}/api/stores/${storeId}/comments/`,
+    "add-comment": `${SERVER_CONTEXT}/api/comments/`,
 }
 
 export const authApi = () => {

@@ -126,6 +126,7 @@ const Home = () => {
                             
                         </Row>
                         {foods.map(f => {
+                            let urlFood = `foods/${f.id}`;
                         return <Col xs={12} md={3} className="mt-1">
                                 
                                 <Card style={{ width: '20rem' }} >
@@ -142,7 +143,7 @@ const Home = () => {
                                             <Card.Text>{f.price} VNĐ</Card.Text>
                                             <Card.Text>{f.idCuaHang.name}</Card.Text>
                                             
-                                            <Button variant="primary" style={{marginRight: '5.20rem'}}>Xem chi tiết</Button>
+                                            <Link to={urlFood} className="btn btn-info" variant="primary"style={{marginRight: '5.20rem'}}> Xem chi tiết</Link>
                                             <Button variant="danger">Đặt hàng</Button>
                                         </Card.Body>
                                 </Card>     

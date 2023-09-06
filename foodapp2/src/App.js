@@ -15,6 +15,7 @@ import ManageStore from "./components/ManageStore";
 import AddFood from "./components/AddFood";
 import UpdateFood from "./components/UpdateFood";
 import GoongMap from "./components/GoongMap";
+import FoodDetail from "./components/FoodDetail";
 
 export const MyUserContext = createContext();
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/stores/manager/addfood" element={<AddFood />} />
           <Route path="/stores/foods/updatefood/:foodId" element={<UpdateFood />} />
           <Route path="/goongmap/shop" element={<GoongMap />} />
+          <Route path="/foods/:foodId" element={<FoodDetail />} />
         </Routes>
         <Footer />
       </BrowserRouter>
