@@ -16,14 +16,27 @@ import AddFood from "./components/AddFood";
 import UpdateFood from "./components/UpdateFood";
 import GoongMap from "./components/GoongMap";
 import FoodDetail from "./components/FoodDetail";
+import StoreSignup from "./components/StoreSignup";
+import MyCartCounterReducer from "./reducers/MyCartCounterReducer";
+import Cart from "./components/Cart";
 
 export const MyUserContext = createContext();
+export const MyCartContext = createContext();
+
+const countCart = () => {
+  let cart = cookie.load("cart") || null;
+  if (cart !== null)
+    return Object.values(cart).reduce((init, current) => init + current["quantity"], 0);
+  return 0;
+}
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, cookie.load("user") || null);
+  const [cartCounter, cartDispatch] = useReducer(MyCartCounterReducer, countCart());
   return(
     <>
     <MyUserContext.Provider value={[user, dispatch]}>
+    <MyCartContext.Provider value={[cartCounter, cartDispatch]}>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -38,9 +51,12 @@ const App = () => {
           <Route path="/stores/foods/updatefood/:foodId" element={<UpdateFood />} />
           <Route path="/goongmap/shop" element={<GoongMap />} />
           <Route path="/foods/:foodId" element={<FoodDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          {/* <Route path="/stores/signup" element={<StoreSignup />} /> */}
         </Routes>
         <Footer />
       </BrowserRouter>
+      </MyCartContext.Provider>
     </MyUserContext.Provider>
     
     </>

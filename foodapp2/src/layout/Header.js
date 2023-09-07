@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { Button, Container, Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import { Badge, Button, Container, Image, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { MyUserContext } from "../App";
+import { MyCartContext, MyUserContext } from "../App";
 
 const Header = () => {
     const [user, dispatch] = useContext(MyUserContext);
+    const [cartCounter, ] = useContext(MyCartContext);
     const logout = () => {
         dispatch({
             "type": "logout"
@@ -85,6 +86,7 @@ const Header = () => {
                                 {/* <Link  className="nav-link text-danger" to="/">Chào {user.taiKhoan} ! <Image src={user.avatar} roundedCircle thumbnail fluid style={{ width: '2.15rem' }} /></Link>
                         <Button variant="secondary" onClick={logout}>Đăng xuất</Button> */}
                             </>}
+                            <Link className="nav-link text-danger" to="/cart">&#128722; <Badge bg="danger">{cartCounter}</Badge></Link>
                             {/* {user === null ? <Link to="/login" className="nav-link text-danger">Đăng nhập</Link>:<>
                         <Link to="/login" className="nav-link text-succes">Chào {user.username}!</Link> 
                         <Button variant="secondary" onClick={logout}>Đăng xuất</Button>
