@@ -70,7 +70,7 @@ const Header = () => {
                                                 </NavDropdown.Item>
                                             </> :
                                             <NavDropdown.Item>
-                                                <Link className="nav-link text-light" to="/">Bắt đầu kinh doanh</Link>
+                                                <Link className="nav-link text-light" to="/stores/signup">Bắt đầu kinh doanh</Link>
                                             </NavDropdown.Item>
                                         }
                                         <NavDropdown.Divider />

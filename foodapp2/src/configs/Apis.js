@@ -20,7 +20,8 @@ export const endpoints = {
     "login": `${SERVER_CONTEXT}/api/login/`,
     "comments": (storeId) => `${SERVER_CONTEXT}/api/stores/${storeId}/comments/`,
     "add-comment": `${SERVER_CONTEXT}/api/comments/`,
-    "add-store": `${SERVER_CONTEXT}/api/stores/signup/`
+    "add-store": `${SERVER_CONTEXT}/api/stores/request/`,
+    "request": (reqId) => `${SERVER_CONTEXT}/api/request/${reqId}/`
 }
 
 export const authApi = () => {

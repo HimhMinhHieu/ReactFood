@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/goongmap/shop" element={<GoongMap />} />
           <Route path="/foods/:foodId" element={<FoodDetail />} />
           <Route path="/cart" element={<Cart />} />
-          {/* <Route path="/stores/signup" element={<StoreSignup />} /> */}
+          <Route path="/stores/signup" element={<StoreSignup />} />
         </Routes>
         <Footer />
       </BrowserRouter>

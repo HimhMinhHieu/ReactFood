@@ -38,8 +38,10 @@ const AddFood = () => {
     
     const addfood = (evt) => {
         evt.preventDefault();
-
+        
         const process = async () => {
+            // let res1 = await authApi().get(endpoints['store_details']);
+            // let url1 = `/stores/manager/${res1.data.id}`;
             let form = new FormData();
             
             for (let field in food)
@@ -87,7 +89,7 @@ const AddFood = () => {
                 <Form.Control type="text" onChange={(e) => change(e, "price")} placeholder="Giá" />
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Label>Loại Cửa Hàng</Form.Label>
+                <Form.Label>Loại</Form.Label>
                 <Form.Select aria-label="Default select example" onChange={(e) => change(e, "idLoai")} >
                     <option>Chọn</option>
                     {categories.map(c => {
