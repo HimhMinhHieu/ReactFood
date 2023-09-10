@@ -20,8 +20,14 @@ export const endpoints = {
     "login": `${SERVER_CONTEXT}/api/login/`,
     "comments": (storeId) => `${SERVER_CONTEXT}/api/stores/${storeId}/comments/`,
     "add-comment": `${SERVER_CONTEXT}/api/comments/`,
+    "comments-food": (foodId) => `${SERVER_CONTEXT}/api/foods/${foodId}/comments/`,
+    "add-comment-food": `${SERVER_CONTEXT}/api/foods/comments/`,
     "add-store": `${SERVER_CONTEXT}/api/stores/request/`,
-    "request": (reqId) => `${SERVER_CONTEXT}/api/request/${reqId}/`
+    "request": (reqId) => `${SERVER_CONTEXT}/api/request/${reqId}/`,
+    "pay": `${SERVER_CONTEXT}/api/pay/`,
+    "receipt": `${SERVER_CONTEXT}/api/receipt/`,
+    "chart": `${SERVER_CONTEXT}/api/receipt/chart/`,
+    "chart-month": (storeId) => `${SERVER_CONTEXT}/api/receipt/chart/${storeId}/`
 }
 
 export const authApi = () => {

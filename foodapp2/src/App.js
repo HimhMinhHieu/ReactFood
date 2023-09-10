@@ -19,6 +19,8 @@ import FoodDetail from "./components/FoodDetail";
 import StoreSignup from "./components/StoreSignup";
 import MyCartCounterReducer from "./reducers/MyCartCounterReducer";
 import Cart from "./components/Cart";
+import Receipt from "./components/Receipt";
+import ChartMonth from "./components/Chart";
 
 export const MyUserContext = createContext();
 export const MyCartContext = createContext();
@@ -51,8 +53,11 @@ const App = () => {
           <Route path="/stores/foods/updatefood/:foodId" element={<UpdateFood />} />
           <Route path="/goongmap/shop" element={<GoongMap />} />
           <Route path="/foods/:foodId" element={<FoodDetail />} />
+          <Route path="/stores/:storeId/foods/:foodId" element={<FoodDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/stores/signup" element={<StoreSignup />} />
+          <Route path="/receipt" element={<Receipt />} />
+          <Route path="/chart/:storeId" element={<ChartMonth />} />
         </Routes>
         <Footer />
       </BrowserRouter>

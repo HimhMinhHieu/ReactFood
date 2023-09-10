@@ -68,6 +68,9 @@ const Header = () => {
                                                 <NavDropdown.Item>
                                                     <Link className="nav-link text-light" to="/">Quản lý cửa hàng</Link>
                                                 </NavDropdown.Item>
+                                                <NavDropdown.Item>
+                                                    <Link className="nav-link text-light" to="/">Thống Kê</Link>
+                                                </NavDropdown.Item>
                                             </> :
                                             <NavDropdown.Item>
                                                 <Link className="nav-link text-light" to="/stores/signup">Bắt đầu kinh doanh</Link>

@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MySpinner from "../layout/MySpinner";
-import { Alert, Button, Card, Carousel, Col, Image, Row, Tab, Tabs } from "react-bootstrap";
+import { Alert, Card, Carousel, Col, Image, Row, Tab, Tabs } from "react-bootstrap";
 import Apis, { endpoints } from "../configs/Apis";
 import { Link, useSearchParams } from "react-router-dom";
-import cookie from "react-cookies";
-import { MyCartContext } from "../App";
+
 
 const Home = () => {
     const [categories, setCategories] = useState(null);
     const [catestores, setCatestores] = useState(null);
     const [stores, setStores] = useState(null);
     const [q] = useSearchParams();
-    const [, cartDispatch] = useContext(MyCartContext);
+    // const [, cartDispatch] = useContext(MyCartContext);
     
     useEffect(() => {
         const loadStores = async () => {
@@ -85,32 +84,32 @@ const Home = () => {
         loadCatestores();
     }, [])
 
-    const order = (food) => {
-        cartDispatch({
-            "type": "inc",
-            "payload": 1
-        });
+    // const order = (food) => {
+    //     cartDispatch({
+    //         "type": "inc",
+    //         "payload": 1
+    //     });
         
-        // lưu vào cookies
-        let cart = cookie.load("cart") || null;
-        if (cart == null)
-            cart = {};
+    //     // lưu vào cookies
+    //     let cart = cookie.load("cart") || null;
+    //     if (cart == null)
+    //         cart = {};
         
-        if (food.id in cart) { // sản phẩm có trong giỏ
-            cart[food.id]["quantity"] += 1;
-        } else { // sản phẩm chưa có trong giỏ
-            cart[food.id] = {
-                "id": food.id,
-                "name": food.name,
-                "quantity": 1,
-                "unitPrice": food.price
-            }
-        }
+    //     if (food.id in cart) { // sản phẩm có trong giỏ
+    //         cart[food.id]["quantity"] += 1;
+    //     } else { // sản phẩm chưa có trong giỏ
+    //         cart[food.id] = {
+    //             "id": food.id,
+    //             "name": food.name,
+    //             "quantity": 1,
+    //             "unitPrice": food.price
+    //         }
+    //     }
 
-        cookie.save("cart", cart);
+    //     cookie.save("cart", cart);
 
-        console.info(cart);
-    }
+    //     console.info(cart);
+    // }
 
     if (stores === null)
         return <MySpinner />
@@ -156,7 +155,7 @@ const Home = () => {
                             
                         </Row>
                         {foods.map(f => {
-                            let urlFood = `foods/${f.id}`;
+                            let urlFood = `/stores/${f.idCuaHang.id}`;
                         return <Col xs={12} md={3} className="mt-1">
                                 
                                 <Card style={{ width: '20rem' }} >
@@ -173,8 +172,8 @@ const Home = () => {
                                             <Card.Text>{f.price} VNĐ</Card.Text>
                                             <Card.Text>{f.idCuaHang.name}</Card.Text>
                                             
-                                            <Link to={urlFood} className="btn btn-info" variant="primary"style={{marginRight: '5.20rem'}}> Xem chi tiết</Link>
-                                            <Button variant="success" onClick={() => order(f)}>Đặt hàng</Button>
+                                            <Link to={urlFood} className="btn btn-info" variant="primary" style={{marginRight: '5.20rem'}}>Xem chi tiết</Link>
+                                            {/* <Button variant="success" onClick={() => order(f)}>Đặt hàng</Button> */}
                                         </Card.Body>
                                 </Card>     
                             </Col>

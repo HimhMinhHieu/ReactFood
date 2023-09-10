@@ -3,9 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import Apis, { authApi, endpoints } from "../configs/Apis";
 import MySpinner from "../layout/MySpinner";
 import { Button, Card, Carousel, Col, Form, Image, ListGroup, Row, Tab, Tabs } from "react-bootstrap";
-import { MyUserContext } from "../App";
+import { MyCartContext, MyUserContext } from "../App";
 import Moment from "react-moment";
 import 'moment/locale/vi';
+import cookie from "react-cookies";
 
 const FoodStore = () => {
     const [user,] = useContext(MyUserContext);
@@ -14,6 +15,7 @@ const FoodStore = () => {
     const [comments, setComments] = useState(null);
     const [content, setContent] = useState();
     const [star, setStar] = useState();
+    const [, cartDispatch] = useContext(MyCartContext);
 
     useEffect(() => {
         const loadStore = async () => {
@@ -45,6 +47,34 @@ const FoodStore = () => {
         process();
     }
 
+    const order = (food) => {
+        cartDispatch({
+            "type": "inc",
+            "payload": 1
+        });
+        
+        // lưu vào cookies
+        let cart = cookie.load("cart") || null;
+        if (cart == null)
+            cart = {};
+        
+        if (food.id in cart) { // sản phẩm có trong giỏ
+            cart[food.id]["quantity"] += 1;
+        } else { // sản phẩm chưa có trong giỏ
+            cart[food.id] = {
+                "id": food.id,
+                "name": food.name,
+                "quantity": 1,
+                "unitPrice": food.price,
+                "idCuaHang": storeId
+            }
+        }
+
+        cookie.save("cart", cart);
+
+        console.info(cart);
+    }
+
     if (store === null || comments === null)
         return <MySpinner />;
     let url = `/login?next=/stores/${storeId}`;
@@ -61,6 +91,7 @@ const FoodStore = () => {
                     <Row>
 
                         {store.map(f => {
+                            let urlFood = `foods/${f.id}`;
                             return <Col xs={12} md={3} className="mt-1" >
 
                                 <Card style={{ width: '20rem' }} >
@@ -77,8 +108,8 @@ const FoodStore = () => {
                                         <Card.Text>{f.price} VNĐ</Card.Text>
                                         <Card.Text>{f.idCuaHang.name}</Card.Text>
 
-                                        <Button variant="primary" style={{ marginRight: '5.20rem' }}>Xem chi tiết</Button>
-                                        <Button variant="danger">Đặt hàng</Button>
+                                        <Link to={urlFood} className="btn btn-info" variant="primary"style={{marginRight: '5.20rem'}}> Xem chi tiết</Link>
+                                        <Button variant="success" onClick={() => order(f)}>Đặt hàng</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>

@@ -9,7 +9,8 @@ const StoreSignup = () => {
         "name": "", 
         "diaChi": "", 
         "idNguoiDung": "",
-        "idLoaiCuaHang": "" 
+        "idLoaiCuaHang": "",
+        "giaVanChuyen": "" 
     });
     const [nguoidung, setNguoiDung] = useState(null);
     const [catestores, setCatestores] = useState(null);
@@ -95,6 +96,10 @@ const StoreSignup = () => {
                         return <option value={c.id}>{c.name}</option>
                     })}
                 </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label>Giá Vận Chuyển Quy Định</Form.Label>
+                <Form.Control type="text" onChange={(e) => change(e, "giaVanChuyen")} placeholder="Giá Vận Chuyển Quy Định" />
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Ảnh</Form.Label>

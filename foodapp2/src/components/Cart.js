@@ -1,15 +1,17 @@
 
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Alert, Button, Form, Table } from "react-bootstrap";
 import cookie from "react-cookies";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MyCartContext, MyUserContext } from "../App";
 import { authApi, endpoints } from "../configs/Apis";
 
 const Cart = () => {
     const [, cartDispatch] = useContext(MyCartContext);
-    const [user, ] = useContext(MyUserContext);
+    const [user,] = useContext(MyUserContext);
     const [carts, setCarts] = useState(cookie.load("cart") || null);
+    const nav = useNavigate();
+    
 
     const deleteItem = (item) => {
         cartDispatch({
@@ -48,6 +50,7 @@ const Cart = () => {
                 });
 
                 setCarts([]);
+                nav("/receipt");
             }
         }
 
@@ -56,44 +59,48 @@ const Cart = () => {
 
     if (carts === null)
         return <Alert variant="info" className="mt-2">Không có sản phẩm trong giỏ!</Alert>
-    
+
     if (carts.length === 0)
         return <Alert variant="success" className="mt-2">Thanh toán thành công!</Alert>
 
     return <>
         <h1 className="text-center text-info mt-2">GIỎ HÀNG</h1>
-        
+
+
+
         <Table striped bordered hover>
             <thead>
                 <tr>
-                <th>#</th>
-                <th>Tên sản phẩm</th>
-                <th>Đơn giá</th>
-                <th>Số lượng</th>
-                <th></th>
+                    <th>#</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Cửa Hàng</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {Object.values(carts).map(c => {
                     return <tr>
-                            <td>{c.id}</td>
-                            <td>{c.name}</td>
-                            <td>{c.unitPrice} VNĐ</td>
-                            <td>
-                                <Form.Control type="number" value={carts[c.id]["quantity"]} onBlur={updateItem} 
-                                        onChange={e => setCarts({...carts, [c.id]: {...carts[c.id], "quantity": parseInt(e.target.value)}})}  />
-                            </td>
-                            <td>
-                                <Button variant="danger" onClick={() => deleteItem(c)}>&times;</Button>
-                            </td>
-                        </tr>
+                        <td>{c.id}</td>
+                        <td>{c.name}</td>
+                        <td>{c.unitPrice} VNĐ</td>
+                        <td>
+                            <Form.Control type="number" value={carts[c.id]["quantity"]} onBlur={updateItem}
+                                onChange={e => setCarts({ ...carts, [c.id]: { ...carts[c.id], "quantity": parseInt(e.target.value) } })} />
+                        </td>
+                        <td>{c.idCuaHang}</td>
+                        <td>
+                            <Button variant="danger" onClick={() => deleteItem(c)}>&times;</Button>
+                        </td>
+                    </tr>
                 })}
-                
-            
+
+
             </tbody>
         </Table>
-
-        {user===null?<p>Vui lòng <Link to="/login?next=/cart">đăng nhập</Link> để thanh toán! </p>:<Button variant="info" onClick={pay} className="mt-2 mb-2">Thanh toán</Button>}
+        {/* <Form.Control type="text" ></Form.Control> */}
+        {user === null ? <p>Vui lòng <Link to="/login?next=/cart">đăng nhập</Link> để thanh toán! </p> : <Button variant="info" onClick={pay} className="mt-2 mb-2">Thanh toán</Button>}
     </>
 }
 

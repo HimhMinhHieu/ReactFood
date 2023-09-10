@@ -1,25 +1,53 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import MySpinner from "../layout/MySpinner";
-import { Col, Image, Row, Tab, Table, Tabs } from "react-bootstrap";
+import { Button, Col, Form, Image, ListGroup, Row, Tab, Table, Tabs } from "react-bootstrap";
 import Moment from "react-moment";
-import Apis, { endpoints } from "../configs/Apis";
+import Apis, { authApi, endpoints } from "../configs/Apis";
+import { MyUserContext } from "../App";
 
 const FoodDetail = () => {
     const [food, setFood] = useState(null);
     const { foodId } = useParams();
+    const [comments, setComments] = useState(null);
+    const [content, setContent] = useState();
+    const [star, setStar] = useState();
+    const [user,] = useContext(MyUserContext);
 
     useEffect(() => {
         const loadFood = async () => {
             let { data } = await Apis.get(endpoints['foods_details'](foodId));
             setFood(data);
         }
+
+        const loadComments = async () => {
+            let { data } = await Apis.get(endpoints['comments-food'](foodId));
+            setComments(data);
+        }
+
         loadFood();
+        loadComments();
     }, []);
 
-    if (food === null)
+    const addComment = () => {
+        const process = async () => {
+            let { data } = await authApi().post(endpoints['add-comment-food'], {
+                "noiDung": content,
+                "danhGia": star,
+                "idThucAn": foodId
+            });
+
+            setComments([...comments, data]);
+            
+        }
+
+        process();
+    }
+
+    if (food === null || comments === null)
         return <MySpinner />
 
+    let url = `/login?next=/foods/${foodId}`;
     return <>
         <Row>
             <h1 className="text-center text-info mt-2">Chi Tiết Sản Phẩm ({foodId})</h1>
@@ -75,7 +103,26 @@ const FoodDetail = () => {
                     </Col>
                 </Tab>
                 <Tab eventKey="Store" title="Bình Luận">
-                    
+                <ListGroup>
+                    {comments.map(c => <ListGroup.Item id={c.id}>
+                            {c.idNguoiDung.firstName} - {c.noiDung} - <Moment locale="vi" fromNow>{c.createdDate}</Moment> - {c.danhGia} &#127775;
+                        </ListGroup.Item>)
+                        }
+                    </ListGroup>
+
+                    <hr />
+                    {user===null?<p>Vui lòng <Link to={url}>đăng nhập</Link> để bình luận! </p>:<>
+                        <Form.Control as="textarea" aria-label="With textarea" value={content} onChange={e => setContent(e.target.value)} placeholder="Nội dung bình luận" />
+                        <Form.Select aria-label="Default select example" value={star} onChange={e => setStar(e.target.value)}>
+                            <option>Chọn</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </Form.Select>
+                        <Button onClick={addComment} className="mt-2" variant="info">Bình luận</Button>
+                    </>}
                 </Tab>
             </Tabs>
             

@@ -23,6 +23,7 @@ const StoreDetails = () => {
         return <MySpinner />;
     
         let url = `/stores/manager/${storedetails.id}`;
+        let urlChart = `/chart/${storedetails.id}`;
     return <>
     
         <h1 className="text-center text-info mt-2">Thông tin cửa hàng</h1>
@@ -60,6 +61,8 @@ const StoreDetails = () => {
                 <Link style={{marginRight: '81%', marginLeft: '1rem'}} to="/" className="btn btn-danger">Quay Trở Về</Link>
             
                 <Link to={url} className="btn btn-info">Quản Lý Cửa Hàng</Link>
+
+                <Link to={urlChart} className="btn btn-secondary">Thống Kê</Link>
             </Col>
         </Row>
     </>
